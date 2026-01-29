@@ -235,7 +235,6 @@ nav {
     width: 100%;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, var(--sage-green), #a8b5a3);
 }
 
 .hero-image-container {
@@ -524,6 +523,7 @@ footer {
     <main>
         <section class="hero">
             <div class="hero-image-container">
+                <img src="images/hero.png" alt="VEIL Hero" class="hero-img">
                 <div class="hero-text">
                     <h1 class="fade-in">VEIL</h1>
                     <p class="fade-in-delay">Fragrance inspired by your daily life.</p>
@@ -615,42 +615,32 @@ footer {
 
     <script>
 const products = [
-    { id: 1, name: "Woody Silence", category: "forest", description: "深い森の奥底、湿った土と木々の吐息が混ざり合う、静謐な香木の香り。", price: "¥12,800" },
-    { id: 2, name: "Sandalwood Nap", category: "forest", description: "午後のまどろみ。白檀の柔らかな香りが、深い眠りのような安らぎをもたらします。", price: "¥12,800" },
-    { id: 3, name: "Mossy Rock", category: "forest", description: "冷たい岩肌に息づく苔。清涼感と力強さが同居する、自然の神秘的な香り。", price: "¥11,500" },
-    { id: 4, name: "Morning Cedar", category: "forest", description: "朝露を浴びたスギの若葉。清らかな空気とともに一日を始めるための香り。", price: "¥10,800" },
-    { id: 5, name: "Azure Breeze", category: "ocean", description: "果てしない水平線から届く潮風。砂浜の輝きと自由な開放感を閉じ込めて。", price: "¥12,800" },
-    { id: 6, name: "White Sand", category: "ocean", description: "眩しい太陽に照らされた白い砂浜。清潔感のある爽やかなシトラスマリン。", price: "¥11,800" },
-    { id: 7, name: "Deep Sea", category: "ocean", description: "静かな深海の青。落ち着いたムスクと海藻の香りが、知的な静寂を演出します。", price: "¥13,500" },
-    { id: 8, name: "Moonlight Jazz", category: "jazz", description: "真夜中の琥珀色。スモーキーな煙とピアノの旋律が織りなす大人の時間。", price: "¥14,200" },
-    { id: 9, name: "Midnight Library", category: "jazz", description: "古い革装丁の本と重厚な木の香り。知的好奇心を刺激する、落ち着いた大人の知性。", price: "¥14,200" },
-    { id: 10, name: "Bourbon Night", category: "jazz", description: "熟成されたバーボンとバニラの甘美な誘惑。社交場の華やかさと影を感じさせて。", price: "¥15,800" },
-    { id: 11, name: "Zen Green", category: "zen", description: "静寂な茶室の苔庭。竹林を抜ける風のような、研ぎ澄まされた和の清涼。", price: "¥13,500" },
-    { id: 12, name: "Matcha Moment", category: "zen", description: "点てたての抹茶のような、ほろ苦くも清々しい安らぎのひととき。", price: "¥12,800" },
-    { id: 13, name: "Evening Bell", category: "zen", description: "夕暮れの寺院に響く鐘の音。沈香と白檀が心を整える、瞑想の香り。", price: "¥16,000" },
-    { id: 14, name: "Bamboo Rain", category: "zen", description: "雨の竹林。水滴を纏った竹の瑞々しさと、土の温かみを感じる癒しの香り。", price: "¥12,800" },
-    { id: 15, name: "Citrus Orchard", category: "fruit", description: "陽光を浴びた果樹園。太陽の温もりと瑞々しい果実のポジティブなエネルギー。", price: "¥11,800" },
-    { id: 16, name: "Velvet Peach", category: "fruit", description: "産毛に包まれた桃の瑞々しい甘さ。優しく心を包み込む、午後のティータイム。", price: "¥12,500" },
-    { id: 17, name: "Wild Berry", category: "fruit", description: "摘みたてのベリー。甘酸っぱい刺激が、日常に遊び心と輝きをもたらします。", price: "¥11,000" },
-    { id: 18, name: "Morning Mist", category: "fresh", description: "朝霧に濡れた野花と、雨上がりの街角に漂う凛とした空気感。", price: "¥12,800" },
-    { id: 19, name: "Laundry Air", category: "fresh", description: "洗いたてのシーツが風に揺れる。清潔感に満ちた、まっさらな自分に戻る香り。", price: "¥10,800" },
-    { id: 20, name: "Dazzling Rain", category: "fresh", description: "窓辺で眺める雨のしずく。水辺の植物が輝きを増す、心地よい孤独の時間。", price: "¥12,000" },
-    { id: 21, name: "Velvet Evening", category: "calm", description: "夕暮れ時に揺らぐティーカップ。心をそっと解きほぐす、ベルベットのような安らぎ。", price: "¥12,800" },
-    { id: 22, name: "Fireside Warmth", category: "calm", description: "暖炉の前で読書する冬の夜。薪のはぜる音とスモーキーな温もりが包み込む。", price: "¥14,000" },
-    { id: 23, name: "Silk Sheets", category: "calm", description: "上質なシルクに包まれる幸福感。パウダリーなムスクが極上の眠りへと誘います。", price: "¥15,000" },
-    { id: 24, name: "Chamomile Garden", category: "calm", description: "カモミールの咲く庭。ハーブの優しい香りが、昂ぶった神経を鎮めてくれます。", price: "¥12,000" },
-    { id: 25, name: "Afternoon Tea", category: "calm", description: "アールグレイの香りと穏やかな会話。日常の中にある小さな幸せを大切にする香り。", price: "¥11,500" }
+    { id: 1, name: "Woody Silence", category: "forest", description: "深い森の奥底、湿った土と木々の吐息が混ざり合う、静謐な香木の香り。", price: "¥12,800", imgBox: "images/forest-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 2, name: "Sandalwood Nap", category: "forest", description: "午後のまどろみ。白檀の柔らかな香りが、深い眠りのような安らぎをもたらします。", price: "¥12,800", imgBox: "images/forest-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 3, name: "Mossy Rock", category: "forest", description: "冷たい岩肌に息づく苔。清涼感と力強さが同居する、自然の神秘的な香り。", price: "¥11,500", imgBox: "images/forest-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 4, name: "Morning Cedar", category: "forest", description: "朝露を浴びたスギの若葉。清らかな空気とともに一日を始めるための香り。", price: "¥10,800", imgBox: "images/forest-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 5, name: "Azure Breeze", category: "ocean", description: "果てしない水平線から届く潮風。砂浜の輝きと自由な開放感を閉じ込めて。", price: "¥12,800", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 6, name: "White Sand", category: "ocean", description: "眩しい太陽に照らされた白い砂浜。清潔感のある爽やかなシトラスマリン。", price: "¥11,800", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 7, name: "Deep Sea", category: "ocean", description: "静かな深海の青。落ち着いたムスクと海藻の香りが、知的な静寂を演出します。", price: "¥13,500", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 8, name: "Moonlight Jazz", category: "jazz", description: "真夜中の琥珀色。スモーキーな煙とピアノの旋律が織りなす大人の時間。", price: "¥14,200", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 9, name: "Midnight Library", category: "jazz", description: "古い革装丁の本と重厚な木の香り。知的好奇心を刺激する、落ち着いた大人の知性。", price: "¥14,200", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 10, name: "Bourbon Night", category: "jazz", description: "熟成されたバーボンとバニラの甘美な誘惑。社交場の華やかさと影を感じさせて。", price: "¥15,800", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 11, name: "Zen Green", category: "zen", description: "静寂な茶室の苔庭。竹林を抜ける風のような、研ぎ澄まされた和の清涼。", price: "¥13,500", imgBox: "images/zen-box.png", imgBottle: "images/zen-bottle.png" },
+    { id: 12, name: "Matcha Moment", category: "zen", description: "点てたての抹茶のような、ほろ苦くも清々しい安らぎのひととき。", price: "¥12,800", imgBox: "images/zen-box.png", imgBottle: "images/zen-bottle.png" },
+    { id: 13, name: "Evening Bell", category: "zen", description: "夕暮れの寺院に響く鐘の音。沈香と白檀が心を整える、瞑想の香り。", price: "¥16,000", imgBox: "images/zen-box.png", imgBottle: "images/zen-bottle.png" },
+    { id: 14, name: "Bamboo Rain", category: "zen", description: "雨の竹林。水滴を纏った竹の瑞々しさと、土の温かみを感じる癒しの香り。", price: "¥12,800", imgBox: "images/zen-box.png", imgBottle: "images/zen-bottle.png" },
+    { id: 15, name: "Citrus Orchard", category: "fruit", description: "陽光を浴びた果樹園。太陽の温もりと瑞々しい果実のポジティブなエネルギー。", price: "¥11,800", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 16, name: "Velvet Peach", category: "fruit", description: "産毛に包まれた桃の瑞々しい甘さ。優しく心を包み込む、午後のティータイム。", price: "¥12,500", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 17, name: "Wild Berry", category: "fruit", description: "摘みたてのベリー。甘酸っぱい刺激が、日常に遊び心と輝きをもたらします。", price: "¥11,000", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 18, name: "Morning Mist", category: "fresh", description: "朝霧に濡れた野花と、雨上がりの街角に漂う凛とした空気感。", price: "¥12,800", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 19, name: "Laundry Air", category: "fresh", description: "洗いたてのシーツが風に揺れる。清潔感に満ちた、まっさらな自分に戻る香り。", price: "¥10,800", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 20, name: "Dazzling Rain", category: "fresh", description: "窓辺で眺める雨のしずく。水辺の植物が輝きを増す、心地よい孤独の時間。", price: "¥12,000", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 21, name: "Velvet Evening", category: "calm", description: "夕暮れ時に揺らぐティーカップ。心をそっと解きほぐす、ベルベットのような安らぎ。", price: "¥12,800", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 22, name: "Fireside Warmth", category: "calm", description: "暖炉の前で読書する冬の夜。薪のはぜる音とスモーキーな温もりが包み込む。", price: "¥14,000", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 23, name: "Silk Sheets", category: "calm", description: "上質なシルクに包まれる幸福感。パウダリーなムスクが極上の眠りへと誘います。", price: "¥15,000", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 24, name: "Chamomile Garden", category: "calm", description: "カモミールの咲く庭。ハーブの優しい香りが、昂ぶった神経を鎮めてくれます。", price: "¥12,000", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" },
+    { id: 25, name: "Afternoon Tea", category: "calm", description: "アールグレイの香りと穏やかな会話。日常の中にある小さな幸せを大切にする香り。", price: "¥11,500", imgBox: "images/product-box.png", imgBottle: "images/product-bottle.png" }
 ];
-
-const categoryColors = {
-    forest: '#4a6741',
-    ocean: '#3a7ca5',
-    jazz: '#5c4033',
-    zen: '#6b8e6b',
-    fruit: '#e07b53',
-    fresh: '#7fbfbf',
-    calm: '#9a8b7a'
-};
 
 document.addEventListener('DOMContentLoaded', () => {
     const productGrid = document.getElementById('product-grid');
@@ -681,13 +671,13 @@ document.addEventListener('DOMContentLoaded', () => {
             : products.filter(p => p.category === category);
 
         filtered.forEach(p => {
-            const color = categoryColors[p.category] || '#888';
             const card = document.createElement('div');
             card.className = 'product-card fade-up visible';
             card.dataset.id = p.id;
             card.innerHTML = `
-                <div class="image-wrapper" style="background-color: ${color}20;">
-                    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:${color};font-family:var(--font-serif);font-size:2rem;font-style:italic;">${p.name.charAt(0)}</div>
+                <div class="image-wrapper">
+                    <img src="${p.imgBox}" alt="${p.name} Box" class="img-box">
+                    <img src="${p.imgBottle}" alt="${p.name} Bottle" class="img-bottle">
                 </div>
                 <div class="product-meta">
                     <h3>${p.name}</h3>
@@ -724,9 +714,7 @@ document.addEventListener('DOMContentLoaded', () => {
         descEl.textContent = product.description;
         priceEl.textContent = product.price;
 
-        const color = categoryColors[product.category] || '#888';
-        sceneEl.style.backgroundColor = color;
-        sceneEl.innerHTML = '';
+        sceneEl.style.backgroundImage = `url('images/hero.png')`;
 
         if (detailOverlay) {
             detailOverlay.classList.add('active');
