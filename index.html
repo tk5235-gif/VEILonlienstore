@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEIL | Fragrance inspired by your daily life.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --bg-color: #F9F9F7;
+    --text-primary: #1a1a1a;
+    --text-secondary: #555555;
+    --accent-color: #E1DFD8;
+    --sage-green: #B7C2B2;
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Noto Sans JP', sans-serif;
+    --transition-slow: 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+    --transition-mid: 0.4s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: 0.15rem;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 4rem;
+    font-style: italic;
+}
+
+.detail-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+}
+
+.detail-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.detail-content {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.close-detail {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background: none;
+    border: none;
+    font-size: 3rem;
+    color: white;
+    cursor: pointer;
+    z-index: 1100;
+    line-height: 1;
+    mix-blend-mode: difference;
+}
+
+.detail-hero {
+    height: 70vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.scene-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 10s ease;
+    background-color: var(--sage-green);
+}
+
+.detail-overlay.active .scene-image {
+    transform: scale(1.1);
+}
+
+.scene-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+}
+
+.detail-header {
+    position: absolute;
+    bottom: 4rem;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+.detail-header h2 {
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+}
+
+.detail-header p {
+    font-size: 1.2rem;
+    letter-spacing: 0.5rem;
+    text-transform: uppercase;
+}
+
+.detail-body {
+    padding: 6rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.detail-info p {
+    font-size: 1.4rem;
+    margin-bottom: 3rem;
+    line-height: 2;
+}
+
+.detail-info .price {
+    display: block;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    font-family: var(--font-serif);
+}
+
+.add-to-cart {
+    background-color: var(--text-primary);
+    color: white;
+    border: none;
+    padding: 1.5rem 4rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    letter-spacing: 0.2rem;
+    cursor: pointer;
+    transition: var(--transition-mid);
+}
+
+.add-to-cart:hover {
+    background-color: #444;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 2rem;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), transparent);
+    z-index: -1;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.logo {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    letter-spacing: 0.3rem;
+}
+
+.nav-links a {
+    color: inherit;
+    text-decoration: none;
+    margin-left: 2rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.1rem;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.nav-links a:hover {
+    opacity: 1;
+}
+
+.hero {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--sage-green), #a8b5a3);
+}
+
+.hero-image-container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9);
+}
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
+
+.hero-text h1 {
+    font-size: 6rem;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+}
+
+.hero-text p {
+    font-size: 1rem;
+    letter-spacing: 0.3rem;
+}
+
+.concept {
+    padding: 12rem 0;
+    text-align: center;
+}
+
+.concept blockquote {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    line-height: 2.5;
+}
+
+.sub-quote {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-top: 2rem;
+    letter-spacing: 0.05rem;
+}
+
+.collection {
+    padding-bottom: 15rem;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 5rem;
+}
+
+.filter-btn {
+    background: none;
+    border: none;
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    position: relative;
+    transition: var(--transition-mid);
+}
+
+.filter-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 1px;
+    background-color: var(--text-primary);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    color: var(--text-primary);
+}
+
+.filter-btn.active::after {
+    transform: scaleX(1);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 5rem 3rem;
+}
+
+.product-card {
+    text-align: center;
+    transition: var(--transition-slow);
+}
+
+.product-card.hide {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+}
+
+.image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: white;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.image-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 12%;
+    transition: var(--transition-slow);
+}
+
+.img-bottle {
+    opacity: 0;
+    transform: scale(1.1) translateY(10px);
+}
+
+.product-card:hover .img-box {
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+}
+
+.product-card:hover .img-bottle {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.product-meta h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.6rem;
+}
+
+.product-meta p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.product-meta .price {
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-weight: 400;
+}
+
+.contact {
+    padding: 10rem 0;
+    background-color: var(--bg-color);
+    text-align: center;
+}
+
+.contact-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-text {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+    line-height: 2;
+}
+
+.instagram-link {
+    display: inline-block;
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-style: italic;
+    position: relative;
+    transition: var(--transition-mid);
+}
+
+.instagram-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--text-primary);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.6s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.instagram-link:hover {
+    opacity: 0.7;
+}
+
+.instagram-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+footer {
+    padding: 8rem 0;
+    background-color: #f0f0ed;
+    text-align: center;
+}
+
+.footer-content .logo {
+    margin-bottom: 3rem;
+    color: var(--text-primary);
+}
+
+.footer-nav {
+    margin-bottom: 3rem;
+}
+
+.footer-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin: 0 1.5rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.05rem;
+}
+
+.copyright {
+    font-size: 0.75rem;
+    color: #bbb;
+}
+
+.fade-in { animation: fadeIn 2.5s forwards; }
+.fade-in-delay { opacity: 0; animation: fadeIn 2.5s 1.2s forwards; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: var(--transition-slow);
+}
+
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .hero-text h1 { font-size: 3.5rem; }
+    .concept blockquote { font-size: 1.4rem; }
+    .product-grid { grid-template-columns: 1fr; }
+}
+    </style>
+</head>
+<body>
+    <header class="fade-in">
+        <nav>
+            <div class="logo">VEIL</div>
+            <div class="nav-links">
+                <a href="#concept">Concept</a>
+                <a href="#collection">Collection</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-image-container">
+                <div class="hero-text">
+                    <h1 class="fade-in">VEIL</h1>
+                    <p class="fade-in-delay">Fragrance inspired by your daily life.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="concept" class="concept">
+            <div class="container">
+                <blockquote class="fade-up">
+                    <p>日常の喧騒を離れ、自然の静寂に身を委ねる。</p>
+                    <p>VEILは、あなたの生活に溶け込む「癒し」の香りです。</p>
+                    <p class="sub-quote">ふとした瞬間に香る、あの日の思い出、安らぎの時間。</p>
+                    <p class="sub-quote" style="margin-top:1.5rem;">何気ない一日が、香りと共に特別な物語へと変わる。あなたのための、静かな癒やし。</p>
+                </blockquote>
+            </div>
+        </section>
+
+        <section id="collection" class="collection">
+            <div class="container">
+                <h2 class="section-title fade-up">Our Collection</h2>
+                
+                <div class="filter-container fade-up">
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <button class="filter-btn" data-category="forest">Forest</button>
+                    <button class="filter-btn" data-category="ocean">Ocean</button>
+                    <button class="filter-btn" data-category="jazz">Jazz</button>
+                    <button class="filter-btn" data-category="zen">Zen</button>
+                    <button class="filter-btn" data-category="fruit">Fruit</button>
+                    <button class="filter-btn" data-category="fresh">Fresh</button>
+                    <button class="filter-btn" data-category="calm">Calm</button>
+                </div>
+
+                <div id="product-grid" class="product-grid">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="product-detail" class="detail-overlay">
+        <div class="detail-content">
+            <button class="close-detail" aria-label="Close details">&times;</button>
+            <div class="detail-hero">
+                <div class="scene-image" id="detail-scene"></div>
+                <div class="scene-overlay"></div>
+                <div class="detail-header">
+                    <h2 id="detail-title">Product Name</h2>
+                    <p id="detail-subtitle">Category Concept</p>
+                </div>
+            </div>
+            <div class="detail-body">
+                <div class="detail-info">
+                    <p id="detail-description">Description goes here.</p>
+                    <span id="detail-price" class="price"></span>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title fade-up">Contact</h2>
+            <div class="contact-content fade-up">
+                <p class="contact-text">
+                    香りの体験や、コラボレーション、その他お問い合わせは<br>
+                    Instagramのダイレクトメッセージにて承っております。
+                </p>
+                <a href="https://www.instagram.com/veil.scent" target="_blank" rel="noopener noreferrer" class="instagram-link">
+                    @veil.scent
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="fade-in">
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">VEIL</div>
+                <div class="footer-nav">
+                    <a href="#">Instagram</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Shop Guide</a>
+                </div>
+                <p class="copyright">&copy; 2026 VEIL Fragrance / Art Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+const products = [
+    { id: 1, name: "Woody Silence", category: "forest", description: "深い森の奥底、湿った土と木々の吐息が混ざり合う、静謐な香木の香り。", price: "¥12,800" },
+    { id: 2, name: "Sandalwood Nap", category: "forest", description: "午後のまどろみ。白檀の柔らかな香りが、深い眠りのような安らぎをもたらします。", price: "¥12,800" },
+    { id: 3, name: "Mossy Rock", category: "forest", description: "冷たい岩肌に息づく苔。清涼感と力強さが同居する、自然の神秘的な香り。", price: "¥11,500" },
+    { id: 4, name: "Morning Cedar", category: "forest", description: "朝露を浴びたスギの若葉。清らかな空気とともに一日を始めるための香り。", price: "¥10,800" },
+    { id: 5, name: "Azure Breeze", category: "ocean", description: "果てしない水平線から届く潮風。砂浜の輝きと自由な開放感を閉じ込めて。", price: "¥12,800" },
+    { id: 6, name: "White Sand", category: "ocean", description: "眩しい太陽に照らされた白い砂浜。清潔感のある爽やかなシトラスマリン。", price: "¥11,800" },
+    { id: 7, name: "Deep Sea", category: "ocean", description: "静かな深海の青。落ち着いたムスクと海藻の香りが、知的な静寂を演出します。", price: "¥13,500" },
+    { id: 8, name: "Moonlight Jazz", category: "jazz", description: "真夜中の琥珀色。スモーキーな煙とピアノの旋律が織りなす大人の時間。", price: "¥14,200" },
+    { id: 9, name: "Midnight Library", category: "jazz", description: "古い革装丁の本と重厚な木の香り。知的好奇心を刺激する、落ち着いた大人の知性。", price: "¥14,200" },
+    { id: 10, name: "Bourbon Night", category: "jazz", description: "熟成されたバーボンとバニラの甘美な誘惑。社交場の華やかさと影を感じさせて。", price: "¥15,800" },
+    { id: 11, name: "Zen Green", category: "zen", description: "静寂な茶室の苔庭。竹林を抜ける風のような、研ぎ澄まされた和の清涼。", price: "¥13,500" },
+    { id: 12, name: "Matcha Moment", category: "zen", description: "点てたての抹茶のような、ほろ苦くも清々しい安らぎのひととき。", price: "¥12,800" },
+    { id: 13, name: "Evening Bell", category: "zen", description: "夕暮れの寺院に響く鐘の音。沈香と白檀が心を整える、瞑想の香り。", price: "¥16,000" },
+    { id: 14, name: "Bamboo Rain", category: "zen", description: "雨の竹林。水滴を纏った竹の瑞々しさと、土の温かみを感じる癒しの香り。", price: "¥12,800" },
+    { id: 15, name: "Citrus Orchard", category: "fruit", description: "陽光を浴びた果樹園。太陽の温もりと瑞々しい果実のポジティブなエネルギー。", price: "¥11,800" },
+    { id: 16, name: "Velvet Peach", category: "fruit", description: "産毛に包まれた桃の瑞々しい甘さ。優しく心を包み込む、午後のティータイム。", price: "¥12,500" },
+    { id: 17, name: "Wild Berry", category: "fruit", description: "摘みたてのベリー。甘酸っぱい刺激が、日常に遊び心と輝きをもたらします。", price: "¥11,000" },
+    { id: 18, name: "Morning Mist", category: "fresh", description: "朝霧に濡れた野花と、雨上がりの街角に漂う凛とした空気感。", price: "¥12,800" },
+    { id: 19, name: "Laundry Air", category: "fresh", description: "洗いたてのシーツが風に揺れる。清潔感に満ちた、まっさらな自分に戻る香り。", price: "¥10,800" },
+    { id: 20, name: "Dazzling Rain", category: "fresh", description: "窓辺で眺める雨のしずく。水辺の植物が輝きを増す、心地よい孤独の時間。", price: "¥12,000" },
+    { id: 21, name: "Velvet Evening", category: "calm", description: "夕暮れ時に揺らぐティーカップ。心をそっと解きほぐす、ベルベットのような安らぎ。", price: "¥12,800" },
+    { id: 22, name: "Fireside Warmth", category: "calm", description: "暖炉の前で読書する冬の夜。薪のはぜる音とスモーキーな温もりが包み込む。", price: "¥14,000" },
+    { id: 23, name: "Silk Sheets", category: "calm", description: "上質なシルクに包まれる幸福感。パウダリーなムスクが極上の眠りへと誘います。", price: "¥15,000" },
+    { id: 24, name: "Chamomile Garden", category: "calm", description: "カモミールの咲く庭。ハーブの優しい香りが、昂ぶった神経を鎮めてくれます。", price: "¥12,000" },
+    { id: 25, name: "Afternoon Tea", category: "calm", description: "アールグレイの香りと穏やかな会話。日常の中にある小さな幸せを大切にする香り。", price: "¥11,500" }
+];
+
+const categoryColors = {
+    forest: '#4a6741',
+    ocean: '#3a7ca5',
+    jazz: '#5c4033',
+    zen: '#6b8e6b',
+    fruit: '#e07b53',
+    fresh: '#7fbfbf',
+    calm: '#9a8b7a'
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const productGrid = document.getElementById('product-grid');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const detailOverlay = document.getElementById('product-detail');
+    const closeDetailBtn = document.querySelector('.close-detail');
+
+    renderProducts('all');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const category = btn.getAttribute('data-category');
+            
+            fadeOutGrid().then(() => {
+                renderProducts(category);
+                fadeInGrid();
+                bindProductClicks();
+            });
+        });
+    });
+
+    function renderProducts(category) {
+        productGrid.innerHTML = '';
+        const filtered = category === 'all' 
+            ? products 
+            : products.filter(p => p.category === category);
+
+        filtered.forEach(p => {
+            const color = categoryColors[p.category] || '#888';
+            const card = document.createElement('div');
+            card.className = 'product-card fade-up visible';
+            card.dataset.id = p.id;
+            card.innerHTML = `
+                <div class="image-wrapper" style="background-color: ${color}20;">
+                    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:${color};font-family:var(--font-serif);font-size:2rem;font-style:italic;">${p.name.charAt(0)}</div>
+                </div>
+                <div class="product-meta">
+                    <h3>${p.name}</h3>
+                    <p>${p.description}</p>
+                    <span class="price">${p.price}</span>
+                </div>
+            `;
+            productGrid.appendChild(card);
+        });
+        bindProductClicks();
+    }
+
+    function bindProductClicks() {
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const productId = card.dataset.id;
+                const product = products.find(p => p.id == productId);
+                showDetail(product);
+            });
+        });
+    }
+
+    function showDetail(product) {
+        const sceneEl = document.getElementById('detail-scene');
+        const titleEl = document.getElementById('detail-title');
+        const subtitleEl = document.getElementById('detail-subtitle');
+        const descEl = document.getElementById('detail-description');
+        const priceEl = document.getElementById('detail-price');
+
+        if (!sceneEl || !titleEl || !subtitleEl || !descEl || !priceEl) return;
+
+        titleEl.textContent = product.name;
+        subtitleEl.textContent = `${product.category.toUpperCase()} | VEIL COLLECTION`;
+        descEl.textContent = product.description;
+        priceEl.textContent = product.price;
+
+        const color = categoryColors[product.category] || '#888';
+        sceneEl.style.backgroundColor = color;
+        sceneEl.innerHTML = '';
+
+        if (detailOverlay) {
+            detailOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    if (closeDetailBtn && detailOverlay) {
+        closeDetailBtn.addEventListener('click', () => {
+            detailOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+
+    function fadeOutGrid() {
+        return new Promise(resolve => {
+            productGrid.style.opacity = '0';
+            productGrid.style.transform = 'translateY(10px)';
+            productGrid.style.transition = '0.3s ease';
+            setTimeout(resolve, 300);
+        });
+    }
+
+    function fadeInGrid() {
+        setTimeout(() => {
+            productGrid.style.opacity = '1';
+            productGrid.style.transform = 'translateY(0)';
+        }, 50);
+    }
+
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+});
+    </script>
+</body>
+</html>
